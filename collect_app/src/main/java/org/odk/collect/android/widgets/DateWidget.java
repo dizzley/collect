@@ -251,12 +251,19 @@ public class DateWidget extends QuestionWidget {
             scrollView.clearChildFocus(mDatePicker);
         }
         clearFocus();
-        DateTime ldt =
-                new DateTime(mDatePicker.getYear(),
-                        (!showCalendar && hideMonth) ? 1 : mDatePicker.getMonth() + 1,
-                        (!showCalendar && (hideMonth || hideDay)) ? 1 : mDatePicker.getDayOfMonth(),
-                        0, 0);
-        // DateTime utc = ldt.withZone(DateTimeZone.forID("UTC"));
+
+        DateTime ldt = new DateTime();
+        try {
+            ldt = new DateTime(mDatePicker.getYear(),
+                    (!showCalendar && hideMonth) ? 1 : mDatePicker.getMonth() + 1,
+                    (!showCalendar && (hideMonth || hideDay)) ? 1 : mDatePicker.getDayOfMonth(),
+                    0, 0);
+            // DateTime utc = ldt.withZone(DateTimeZone.forID("UTC"));
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.exit(10);
+        }
+
         return new DateData(ldt.toDate());
     }
 
